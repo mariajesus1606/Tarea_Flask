@@ -7,7 +7,6 @@ app = Flask (__name__)
 def inicio():
     return render_template("principal.html")
 
-
 # Página potencia:
 @app.route('/potencia/<int:base>/<exp>',methods=["GET","POST"])
 def potencia(base,exp):
