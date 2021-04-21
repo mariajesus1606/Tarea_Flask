@@ -39,6 +39,12 @@ def libros(codigo):
         abort(404)
         
 #Pagina Cuenta Letras  
-
+@app.route('/cuenta/<cadena>/<caracter>',methods=["GET","POST"])
+def contar(cadena,caracter):
+    if len(caracter) != 1:
+        abort(404)
+    else:
+        veces = cadena.count(caracter)
+    return render_template("cuentaletras.html",palabra=cadena,veces=veces,letra=caracter) 
 
 app.run(debug=True)
