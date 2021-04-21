@@ -7,7 +7,7 @@ app = Flask (__name__)
 def inicio():
     return render_template("principal.html")
 
-# Página potencia:
+#Página potencia:
 @app.route('/potencia/<int:base>/<exp>',methods=["GET","POST"])
 def potencia(base,exp):
     exp=int(exp)
@@ -24,6 +24,21 @@ def potencia(base,exp):
     else:
         abort(404)
     return render_template("potencia.html",base=base,exponente=exp,resultado=resultado)
+
+# Pagina libros:
+from lxml import etree
+
+@app.route('/libro/<codigo>') 
+def libros(codigo):
+    biblioteca = etree.parse('libros.xml')
+    if codigo in biblioteca.xpath('//libro/codigo/text()'):
+        autor = biblioteca.xpath('//libro[codigo="%s"]/autor/text()'%(codigo))[0]
+        nombre_libro = biblioteca.xpath('//libro[codigo="%s"]/titulo/text()'%codigo)[0]
+        return render_template("libros.html", libro=nombre_libro, autor=autor) 
+    else:
+        abort(404)
+        
+#Pagina Cuenta Letras  
 
 
 app.run(debug=True)
